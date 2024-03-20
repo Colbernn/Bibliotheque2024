@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
+//test
 public class Gestion {
     Scanner sc = new Scanner(System.in);
 //on a ôté static pour les listes qui n'est plus nécessaire
