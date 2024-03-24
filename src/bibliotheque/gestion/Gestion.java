@@ -158,6 +158,17 @@ public class Gestion {
         lex.add(ex);
         System.out.println("exemplaire créé");
         //TODO attribuer rayon
+        int i=0;
+        System.out.println("Rayon ");
+        for(Rayon r : lrayon){
+            System.out.println(i+". " + r.getCodeRayon());
+            i++;
+        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Faites votre choix : ");
+        int choixUser = scanner.nextInt();
+        Rayon choixRayon = lrayon.get(choixUser);
+        ex.setRayon(choixRayon);
     }
 
     private void gestOuvrages() {
@@ -227,6 +238,7 @@ public class Gestion {
            louv.add(o);
         System.out.println("ouvrage créé");
         //TODO ajouter 1 auteur à la liste des auteurs
+        gestAuteurs();
     }
 
        private void gestAuteurs() {
