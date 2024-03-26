@@ -225,13 +225,29 @@ public class Gestion {
                             do{
                                 choix=Utilitaire.choixListe(langues);
                                 if(choix==langues.size())break;
-                                ((DVD)o).getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+                                boolean flag=false;
+                                for(String l : langues){
+                                    if(l==langues(choix)) {
+                                        flag=true;
+                                    }
+                                }
+                                if(!flag) {
+                                    ((DVD) o).getAutresLangues().add(langues.get(choix - 1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+                                }
                             }while(true);
                            System.out.println("sous-titres");
                             do{
                              choix=Utilitaire.choixListe(langues);
                              if(choix==langues.size())break;
-                             ((DVD)o).getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
+                                boolean flag=false;
+                                for(String l : langues){
+                                    if(l==langues(choix)) {
+                                        flag=true;
+                                    }
+                                }
+                                if(!flag) {
+                                ((DVD)o).getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
+                                }
                              }while(true);
                             ;break;
             }
