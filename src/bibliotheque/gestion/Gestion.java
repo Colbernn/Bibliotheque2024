@@ -113,7 +113,16 @@ public class Gestion {
     private void gestLocations() {
         int choix;
         //TODO ne lister que les exemplaires libres et les trier par matricule
-        choix =choixListe(lex);
+        List<Exemplaire> exlibre=new ArrayList<>();
+        for(Exemplaire e : lex){
+            for(Location l : lloc){
+                if(!e.equals(l.getExemplaire())){
+                    exlibre.add(e);
+                }
+            }
+        }
+        Collections.sort(exlibre);
+        choix =choixListe(exlibre);
         if(lex.get(choix).enLocation()){
             System.out.println("exemplaire en location");
             return;
@@ -275,8 +284,18 @@ public class Gestion {
         o = lof.get(choix-1).create();*/
         louv.add(o);
         System.out.println("ouvrage créé");
-         choix = choixListe(laut);
-        o.addAuteur(laut.get(choix-1));
+        int flag=0;
+        while(flag==0) {
+            Collections.sort(laut);
+            choix = choixListe(laut);
+            o.addAuteur(laut.get(choix - 1));
+            System.out.println("Voulez vous continuez ? oui ou non");
+            String continuer=sc.next();
+            if(continuer=="non"){
+                flag=1;
+            }
+
+        }
         //TODO attribuer auteurs par boucle, les auteur sont triés par ordre de nom et prénom,
         // ne pas proposer un auteur déjà présent dans la liste des auteurs de cet ouvrage
     }
