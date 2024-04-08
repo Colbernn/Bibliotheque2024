@@ -1,15 +1,12 @@
 package bibliotheque.metier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
-public class Rayon implements Comparable {
+public class Rayon {
     private String codeRayon;
     private String genre;
-    private Set<Exemplaire> lex;
-    //TODO remplacer par set
+    private Set<Exemplaire> lex = new HashSet<>();
+
 
     public Rayon(String codeRayon, String genre) {
         this.codeRayon = codeRayon;
@@ -71,11 +68,6 @@ public class Rayon implements Comparable {
 
     public Set<Exemplaire>listerExemplaires(){
         return lex;
-    }
-
-    public int compareTo(Object autreRayon){
-        if(this.codeRayon == ((Rayon)autreRayon).codeRayon)return 0;
-        else if(this.codeRayon < ((Rayon)autreRayon).codeRayon)return -1;
     }
 
 
