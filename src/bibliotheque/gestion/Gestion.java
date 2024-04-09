@@ -102,6 +102,8 @@ public class Gestion {
     }
 
     private void gestRestitution() {
+        int choix;
+        choix=choixListe(hmloc);
         //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
     }
 
