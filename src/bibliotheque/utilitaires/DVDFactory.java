@@ -29,6 +29,7 @@ public class DVDFactory extends OuvrageFactory{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
             dvd.getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
+            //test
         }while(true);
         return dvd;
     }
