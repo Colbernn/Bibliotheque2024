@@ -1,58 +1,58 @@
 package bibliotheque.mvc.controller;
 
-import bibliotheque.metier.Auteur;
+import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.Livre;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeLivre;
-import bibliotheque.mvc.model.DAOAuteur;
-import bibliotheque.mvc.view.AbstractViewAuteur;
+import bibliotheque.mvc.model.DAOOuvrage;
+import bibliotheque.mvc.view.AbstractViewOuvrage;
 
 import java.util.List;
 import java.util.Set;
 
 
-public class AuteurController {
+public class OuvrageController {
 
-    protected  DAOAuteur model;
-    protected  AbstractViewAuteur view;
+    protected  DAOOuvrage model;
+    protected  AbstractViewOuvrage view;
 
-    public AuteurController(DAOAuteur model, AbstractViewAuteur view) {
+    public OuvrageController(DAOOuvrage model, AbstractViewOuvrage view) {
         this.model = model;
         this.view = view;
         this.view.setController(this);
     }
 
-    public List<Auteur> getAll(){
-        List<Auteur> l = model.getAll();
+    public List<Ouvrage> getAll(){
+        List<Ouvrage> l = model.getAll();
         return l;
     }
 
-    public Auteur add( Auteur elt) {
-        Auteur nelt = model.add(elt);
+    public Ouvrage add( Ouvrage elt) {
+        Ouvrage nelt = model.add(elt);
         return nelt;
     }
 
 
-    public boolean remove(Auteur elt) {
+    public boolean remove(Ouvrage elt) {
         return model.remove(elt);
     }
-    public Auteur update(Auteur elt) {
+    public Ouvrage update(Ouvrage elt) {
         return model.update(elt);
     }
 
-    public Auteur search(Auteur rech) {
+    public Ouvrage search(Ouvrage rech) {
         return  model.read(rech);
     }
-    public Set<Ouvrage> listerOuvrages(Auteur a) {
+    public Set<Ouvrage> listerOuvrages(Ouvrage a) {
       return model.listerOuvrages(a);
     }
 
-    public List<Livre> listerLivre(Auteur a, TypeLivre tl) {
+    public List<Livre> listerLivre(Ouvrage a, TypeLivre tl) {
 
         return model.listerLivre(a,tl);
     }
 
-    public List<Ouvrage> listerOuvrages(Auteur a, String genre) {
+    public List<Ouvrage> listerOuvrages(Ouvrage a, String genre) {
        return model.listerOuvrages(a,genre);
     }
 }
