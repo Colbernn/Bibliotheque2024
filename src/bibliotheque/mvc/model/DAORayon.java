@@ -22,13 +22,6 @@ public abstract class DAORayon extends Subject {
 
     public abstract List<Rayon> getAll() ;
 
-
-    public abstract Set<Ouvrage> listerOuvrages(Rayon a);
-
-    public abstract List<Livre> listerLivre(Rayon a, TypeLivre tl) ;
-
-    public abstract List<Ouvrage> listerOuvrages(Rayon a, String genre);
-
     public List<Rayon> getNotification(){
         return getAll();
     }

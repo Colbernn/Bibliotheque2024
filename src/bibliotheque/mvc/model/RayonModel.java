@@ -52,18 +52,5 @@ public class RayonModel extends DAORayon {
         return ldatas;
     }
 
-    @Override
-    public Set<Ouvrage> listerOuvrages(Rayon a) {
-        return a.listerOuvrages();
-    }
 
-    @Override
-    public List<Livre> listerLivre(Rayon a, TypeLivre tl) {
-        return a.listerLivres(tl);
-    }
-
-    @Override
-    public List<Ouvrage> listerOuvrages(Rayon a, String genre) {
-        return a.listerOuvrages(genre);
-    }
 }

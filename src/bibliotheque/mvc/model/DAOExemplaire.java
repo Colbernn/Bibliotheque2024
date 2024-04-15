@@ -23,11 +23,7 @@ public abstract class DAOExemplaire extends Subject {
     public abstract List<Exemplaire> getAll() ;
 
 
-    public abstract Set<Ouvrage> listerOuvrages(Exemplaire a);
 
-    public abstract List<Livre> listerLivre(Exemplaire a, TypeLivre tl) ;
-
-    public abstract List<Ouvrage> listerOuvrages(Exemplaire a, String genre);
 
     public List<Exemplaire> getNotification(){
         return getAll();

@@ -52,18 +52,5 @@ public class LecteurModel extends DAOLecteur {
         return ldatas;
     }
 
-    @Override
-    public Set<Ouvrage> listerOuvrages(Lecteur a) {
-        return a.listerOuvrages();
-    }
 
-    @Override
-    public List<Livre> listerLivre(Lecteur a, TypeLivre tl) {
-        return a.listerLivres(tl);
-    }
-
-    @Override
-    public List<Ouvrage> listerOuvrages(Lecteur a, String genre) {
-        return a.listerOuvrages(genre);
-    }
 }

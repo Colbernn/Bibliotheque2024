@@ -23,11 +23,7 @@ public abstract class DAOLecteur extends Subject {
     public abstract List<Lecteur> getAll() ;
 
 
-    public abstract Set<Ouvrage> listerOuvrages(Lecteur a);
 
-    public abstract List<Livre> listerLivre(Lecteur a, TypeLivre tl) ;
-
-    public abstract List<Ouvrage> listerOuvrages(Lecteur a, String genre);
 
     public List<Lecteur> getNotification(){
         return getAll();

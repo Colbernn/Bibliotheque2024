@@ -56,13 +56,13 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire {
 
     public void rechercher() {
         try {
-            System.out.println("nom ");
-            String nom = sc.nextLine();
-            System.out.println("prénom ");
-            String prenom = sc.nextLine();
+            System.out.println("mat ");
+            String mat = sc.nextLine();
+            System.out.println("Description de l'état ");
+            String description = sc.nextLine();
             System.out.println("nationalité");
             String nat = sc.nextLine();
-            Exemplaire rech = new Exemplaire(nom, prenom, nat);
+            Exemplaire rech = new Exemplaire(mat, description, nat);
             Exemplaire a = ExemplaireController.search(rech);
             if(a==null) affMsg("Exemplaire inconnu");
             else {
@@ -81,12 +81,12 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire {
         Exemplaire a = la.get(choix-1);
          do {
             try {
-                String nom = modifyIfNotBlank("nom", a.getNom());
-                String prenom = modifyIfNotBlank("prénom", a.getPrenom());
-                String nat = modifyIfNotBlank("nationalité", a.getNationalite());
-                a.setNom(nom);
-                a.setPrenom(prenom);
-                a.setNationalite(nat);
+                String mat = modifyIfNotBlank("mat", a.getMatricule());
+                String description = modifyIfNotBlank("description de l'état", a.getDescriptionEtat());
+
+                a.setMatricule(mat);
+                a.setDescriptionEtat(description);
+
                 break;
             } catch (Exception e) {
                 System.out.println("erreur :" + e);
@@ -100,13 +100,13 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire {
         Exemplaire a;
         do {
             try {
-                System.out.println("nom ");
-                String nom = sc.nextLine();
-                System.out.println("prénom ");
-                String prenom = sc.nextLine();
-                System.out.println("nationalité");
-                String nat = sc.nextLine();
-                a = new Exemplaire(nom, prenom, nat);
+                System.out.println("matricule ");
+                String mat = sc.nextLine();
+                System.out.println("description de l'état ");
+                String description = sc.nextLine();
+                System.out.println("etat");
+                String etat = sc.nextLine();
+                a = new Exemplaire(mat, description, etat);
                 break;
             } catch (Exception e) {
                 System.out.println("une erreur est survenue : "+e.getMessage());

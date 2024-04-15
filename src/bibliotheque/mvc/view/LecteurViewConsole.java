@@ -3,6 +3,7 @@ package bibliotheque.mvc.view;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.metier.TypeLivre;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,9 +61,17 @@ public class LecteurViewConsole extends AbstractViewLecteur {
             String nom = sc.nextLine();
             System.out.println("prénom ");
             String prenom = sc.nextLine();
-            System.out.println("nationalité");
-            String nat = sc.nextLine();
-            Lecteur rech = new Lecteur(nom, prenom, nat);
+            System.out.println("adresse");
+            String adresse = sc.nextLine();
+            System.out.println("mail");
+            String mail = sc.nextLine();
+            System.out.println("tel");
+            String tel = sc.nextLine();
+            System.out.println("numero de lecteur");
+            int numlecteur = sc.nextInt();
+            System.out.println("date");
+            LocalDate dn = lecDate();
+            Lecteur rech = new Lecteur(numlecteur,nom, prenom,dn, adresse, mail, tel);
             Lecteur a = LecteurController.search(rech);
             if(a==null) affMsg("Lecteur inconnu");
             else {
@@ -78,41 +87,53 @@ public class LecteurViewConsole extends AbstractViewLecteur {
 
     public void modifier() {
         int choix = choixElt(la);
-        Lecteur a = la.get(choix-1);
+        Lecteur l = la.get(choix-1);
          do {
             try {
-                String nom = modifyIfNotBlank("nom", a.getNom());
-                String prenom = modifyIfNotBlank("prénom", a.getPrenom());
-                String nat = modifyIfNotBlank("nationalité", a.getNationalite());
-                a.setNom(nom);
-                a.setPrenom(prenom);
-                a.setNationalite(nat);
+                String nom = modifyIfNotBlank("nom", l.getNom());
+                String prenom = modifyIfNotBlank("prénom", l.getPrenom());
+                String adresse = modifyIfNotBlank("nationalité", l.getAdresse());
+                String mail = modifyIfNotBlank("nationalité", l.getMail());
+                String tel = modifyIfNotBlank("nationalité", l.getTel());
+                l.setNom(nom);
+                l.setPrenom(prenom);
+                l.setAdresse(adresse);
+                l.setMail(mail);
+                l.setTel(tel);
                 break;
             } catch (Exception e) {
                 System.out.println("erreur :" + e);
             }
         }while(true);
-        LecteurController.update(a);
+        LecteurController.update(l);
    }
 
 
     public void ajouter() {
-        Lecteur a;
+        Lecteur le;
         do {
             try {
                 System.out.println("nom ");
                 String nom = sc.nextLine();
                 System.out.println("prénom ");
                 String prenom = sc.nextLine();
-                System.out.println("nationalité");
-                String nat = sc.nextLine();
-                a = new Lecteur(nom, prenom, nat);
+                System.out.println("adresse");
+                String adresse = sc.nextLine();
+                System.out.println("mail");
+                String mail = sc.nextLine();
+                System.out.println("tel");
+                String tel = sc.nextLine();
+                System.out.println("numero de lecteur");
+                int numlecteur = sc.nextInt();
+                System.out.println("date");
+                LocalDate dn = lecDate();
+                le = new Lecteur(numlecteur,nom, prenom,dn, adresse, mail, tel);
                 break;
             } catch (Exception e) {
                 System.out.println("une erreur est survenue : "+e.getMessage());
             }
         }while(true);
-        LecteurController.add(a);
+        LecteurController.add(le);
     }
 
     public void special(Lecteur a) {

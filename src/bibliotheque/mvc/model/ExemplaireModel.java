@@ -52,18 +52,5 @@ public class ExemplaireModel extends DAOExemplaire {
         return ldatas;
     }
 
-    @Override
-    public Set<Ouvrage> listerOuvrages(Exemplaire a) {
-        return a.listerOuvrages();
-    }
 
-    @Override
-    public List<Livre> listerLivre(Exemplaire a, TypeLivre tl) {
-        return a.listerLivres(tl);
-    }
-
-    @Override
-    public List<Ouvrage> listerOuvrages(Exemplaire a, String genre) {
-        return a.listerOuvrages(genre);
-    }
 }

@@ -22,13 +22,6 @@ public abstract class DAOOuvrage extends Subject {
 
     public abstract List<Ouvrage> getAll() ;
 
-
-    public abstract Set<Ouvrage> listerOuvrages(Ouvrage a);
-
-    public abstract List<Livre> listerLivre(Ouvrage a, TypeLivre tl) ;
-
-    public abstract List<Ouvrage> listerOuvrages(Ouvrage a, String genre);
-
     public List<Ouvrage> getNotification(){
         return getAll();
     }
