@@ -1,6 +1,6 @@
 package bibliotheque.mvc.model;
 
-import bibliotheque.metier.Rayon;
+import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Livre;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeLivre;
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class RayonModel extends DAORayon {
+public  class ModelAuteur extends DAO<Auteur> implements DAOSpecialAuteur {
 
-    private List<Rayon> ldatas = new ArrayList<>();
+    private List<Auteur> ldatas = new ArrayList<>();
 
 
     @Override
-    public Rayon add( Rayon elt) {
+    public Auteur add( Auteur elt) {
         boolean present =ldatas.contains(elt);
         if (!present) {
             ldatas.add(elt);
@@ -25,14 +25,14 @@ public class RayonModel extends DAORayon {
     }
 
     @Override
-    public boolean remove( Rayon elt) {
+    public boolean remove( Auteur elt) {
         boolean ok = ldatas.remove(elt);
         notifyObservers();
         return ok;
     }
 
     @Override
-    public Rayon update(Rayon elt) {
+    public Auteur update(Auteur elt) {
         int p = ldatas.indexOf(elt);
         if (p < 0) return null;
         ldatas.set(p, elt);
@@ -41,16 +41,28 @@ public class RayonModel extends DAORayon {
     }
 
     @Override
-    public Rayon read(Rayon rech) {
+    public Auteur read(Auteur rech) {
         int p = ldatas.indexOf(rech);
         if(p<0) return null;
         return ldatas.get(p);
     }
 
     @Override
-    public List<Rayon> getAll() {
+    public List<Auteur> getAll() {
         return ldatas;
     }
+    @Override
+    public Set<Ouvrage> listerOuvrages(Auteur a) {
+        return a.listerOuvrages();
+    }
 
+    @Override
+    public List<Livre> listerLivre(Auteur a, TypeLivre tl) {
+        return a.listerLivres(tl);
+    }
 
+    @Override
+    public List<Ouvrage> listerOuvrages(Auteur a, String genre) {
+        return a.listerOuvrages(genre);
+    }
 }

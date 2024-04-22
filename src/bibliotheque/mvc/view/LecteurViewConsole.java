@@ -1,24 +1,20 @@
 package bibliotheque.mvc.view;
 
 import bibliotheque.metier.Lecteur;
-import bibliotheque.metier.TypeLivre;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 
-public class LecteurViewConsole extends AbstractViewLecteur {
+public class LecteurViewConsole extends AbstractView<Lecteur> {
     Scanner sc = new Scanner(System.in);
 
 
     @Override
     public void menu() {
-        update(LecteurController.getAll());
+        update(controller.getAll());
         List options = Arrays.asList("ajouter", "retirer", "rechercher","modifier","fin");
         do {
             int ch = choixListe(options);
@@ -42,12 +38,17 @@ public class LecteurViewConsole extends AbstractViewLecteur {
         } while (true);
     }
 
+    @Override
+    public void affList(List la) {
+        affListe(la);
+    }
+
     private void retirer() {
         int nl = choixElt(la)-1;
-        Lecteur a = la.get(nl);
-        boolean ok = LecteurController.remove(a);
-        if(ok) affMsg("client effacé");
-        else affMsg("client non effacé");
+        Lecteur l = la.get(nl);
+        boolean ok = controller.remove(l);
+        if(ok) affMsg("lecteur effacé");
+        else affMsg("lecteur non effacé");
     }
 
     private void affMsg(String msg) {
@@ -57,27 +58,14 @@ public class LecteurViewConsole extends AbstractViewLecteur {
 
     public void rechercher() {
         try {
-            System.out.println("nom ");
-            String nom = sc.nextLine();
-            System.out.println("prénom ");
-            String prenom = sc.nextLine();
-            System.out.println("adresse");
-            String adresse = sc.nextLine();
-            System.out.println("mail");
-            String mail = sc.nextLine();
-            System.out.println("tel");
-            String tel = sc.nextLine();
-            System.out.println("numero de lecteur");
-            int numlecteur = sc.nextInt();
-            System.out.println("date");
-            LocalDate dn = lecDate();
-            Lecteur rech = new Lecteur(numlecteur,nom, prenom,dn, adresse, mail, tel);
-            Lecteur a = LecteurController.search(rech);
-            if(a==null) affMsg("Lecteur inconnu");
+            System.out.println("numéro de lecteur :");
+            int id = lireInt();
+            Lecteur rech = new Lecteur(id,"","",null,"","","");
+            Lecteur l = controller.search(rech);
+            if(l==null) affMsg("lecteur inconnu");
             else {
-                affMsg(a.toString());
-                special(a);
-            }
+                affMsg(l.toString());
+             }
         }catch(Exception e){
             System.out.println("erreur : "+e);
         }
@@ -87,100 +75,49 @@ public class LecteurViewConsole extends AbstractViewLecteur {
 
     public void modifier() {
         int choix = choixElt(la);
-        Lecteur l = la.get(choix-1);
+        Lecteur l  = la.get(choix-1);
          do {
             try {
                 String nom = modifyIfNotBlank("nom", l.getNom());
                 String prenom = modifyIfNotBlank("prénom", l.getPrenom());
-                String adresse = modifyIfNotBlank("nationalité", l.getAdresse());
                 String mail = modifyIfNotBlank("nationalité", l.getMail());
-                String tel = modifyIfNotBlank("nationalité", l.getTel());
                 l.setNom(nom);
                 l.setPrenom(prenom);
-                l.setAdresse(adresse);
                 l.setMail(mail);
-                l.setTel(tel);
+                //TODO gérer autres valeurs
                 break;
             } catch (Exception e) {
                 System.out.println("erreur :" + e);
             }
         }while(true);
-        LecteurController.update(l);
+        controller.update(l);
    }
 
 
     public void ajouter() {
-        Lecteur le;
+       Lecteur l;
         do {
             try {
                 System.out.println("nom ");
                 String nom = sc.nextLine();
                 System.out.println("prénom ");
                 String prenom = sc.nextLine();
-                System.out.println("adresse");
-                String adresse = sc.nextLine();
-                System.out.println("mail");
-                String mail = sc.nextLine();
-                System.out.println("tel");
-                String tel = sc.nextLine();
-                System.out.println("numero de lecteur");
-                int numlecteur = sc.nextInt();
-                System.out.println("date");
+                System.out.println("date de naissance :");
                 LocalDate dn = lecDate();
-                le = new Lecteur(numlecteur,nom, prenom,dn, adresse, mail, tel);
+                System.out.println("mail :");
+                String mail = sc.nextLine();
+                System.out.println("adresse :");
+                String adr = sc.nextLine();
+                System.out.println("tel :");
+                String tel = sc.nextLine();
+                l = new Lecteur(nom,prenom,dn,adr,mail,tel);
                 break;
             } catch (Exception e) {
                 System.out.println("une erreur est survenue : "+e.getMessage());
             }
         }while(true);
-        LecteurController.add(le);
+        l=controller.add(l);
+        affMsg("création du lecteur : "+l);
     }
 
-    public void special(Lecteur a) {
-
-        List options = Arrays.asList("lister ouvrages", "lister livres", "lister par genre","fin");
-        do {
-            int ch = choixListe(options);
-
-            switch (ch) {
-
-                case 1:
-                    listerOuvrages(a);
-                    break;
-                case 2:
-                    listerLivres(a);
-                    break;
-                case 3:
-                    listerGenre(a);
-                    break;
-                  case 4 :return;
-            }
-        } while (true);
-
-    }
-
-
-    public void listerGenre(Lecteur a) {
-        System.out.println("genre :");
-        String genre = sc.nextLine();
-        affListe(new ArrayList(LecteurController.listerOuvrages(a,genre)));
-    }
-
-
-    public void listerOuvrages(Lecteur a){
-        affList(new ArrayList(LecteurController.listerOuvrages(a)));
-    }
-
-
-    public void listerLivres(Lecteur a){
-        TypeLivre[] tlv = TypeLivre.values();
-        int ch2 = choixListe(List.of(tlv));
-        TypeLivre tl = tlv[ch2-1];
-        affList(new ArrayList(LecteurController.listerLivre(a,tl)));
-    }
-
-    @Override
-    public void affList(List la) {
-        affListe(la);
-    }
 }

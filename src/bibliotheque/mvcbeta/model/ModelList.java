@@ -1,21 +1,15 @@
-package bibliotheque.mvc.model;
+package bibliotheque.mvcbeta.model;
 
-import bibliotheque.metier.Exemplaire;
-import bibliotheque.metier.Livre;
-import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.TypeLivre;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class ExemplaireModel extends DAOExemplaire {
-
-    private List<Exemplaire> ldatas = new ArrayList<>();
+public class ModelList<T> extends DAO<T>{
+    private List<T> ldatas = new ArrayList<>();
 
 
     @Override
-    public Exemplaire add( Exemplaire elt) {
+    public T add( T elt) {
         boolean present =ldatas.contains(elt);
         if (!present) {
             ldatas.add(elt);
@@ -25,14 +19,14 @@ public class ExemplaireModel extends DAOExemplaire {
     }
 
     @Override
-    public boolean remove( Exemplaire elt) {
+    public boolean remove( T elt) {
         boolean ok = ldatas.remove(elt);
         notifyObservers();
         return ok;
     }
 
     @Override
-    public Exemplaire update(Exemplaire elt) {
+    public T update(T elt) {
         int p = ldatas.indexOf(elt);
         if (p < 0) return null;
         ldatas.set(p, elt);
@@ -41,16 +35,14 @@ public class ExemplaireModel extends DAOExemplaire {
     }
 
     @Override
-    public Exemplaire read(Exemplaire rech) {
+    public T read(T rech) {
         int p = ldatas.indexOf(rech);
         if(p<0) return null;
         return ldatas.get(p);
     }
 
     @Override
-    public List<Exemplaire> getAll() {
+    public List<T> getAll() {
         return ldatas;
     }
-
-
 }

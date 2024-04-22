@@ -1,7 +1,10 @@
 package bibliotheque.mvc.view;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.TypeLivre;
+import bibliotheque.metier.TypeOuvrage;
+import bibliotheque.mvc.controller.ControllerSpecialOuvrage;
+import bibliotheque.utilitaires.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,13 +14,13 @@ import java.util.Scanner;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 
-public class OuvrageViewConsole extends AbstractViewOuvrage {
+public class OuvrageViewConsole extends AbstractView<Ouvrage> {
     Scanner sc = new Scanner(System.in);
 
 
     @Override
     public void menu() {
-        update(OuvrageController.getAll());
+        update(controller.getAll());
         List options = Arrays.asList("ajouter", "retirer", "rechercher","modifier","fin");
         do {
             int ch = choixListe(options);
@@ -44,9 +47,9 @@ public class OuvrageViewConsole extends AbstractViewOuvrage {
     private void retirer() {
         int nl = choixElt(la)-1;
         Ouvrage a = la.get(nl);
-        boolean ok = OuvrageController.remove(a);
-        if(ok) affMsg("client effacé");
-        else affMsg("client non effacé");
+        boolean ok = controller.remove(a);
+        if(ok) affMsg("ouvrage effacé");
+        else affMsg("ouvrage non effacé");
     }
 
     private void affMsg(String msg) {
@@ -55,24 +58,7 @@ public class OuvrageViewConsole extends AbstractViewOuvrage {
 
 
     public void rechercher() {
-        try {
-            System.out.println("nom ");
-            String nom = sc.nextLine();
-            System.out.println("prénom ");
-            String prenom = sc.nextLine();
-            System.out.println("nationalité");
-            String nat = sc.nextLine();
-            Ouvrage rech = new Ouvrage(nom, prenom, nat);
-            Ouvrage a = OuvrageController.search(rech);
-            if(a==null) affMsg("Ouvrage inconnu");
-            else {
-                affMsg(a.toString());
-                special(a);
-            }
-        }catch(Exception e){
-            System.out.println("erreur : "+e);
-        }
-
+        //TODO rechercher ouvrage en demandant type d'ouvrage, puis l'info unique relative à au type recherché
     }
 
 
@@ -81,83 +67,65 @@ public class OuvrageViewConsole extends AbstractViewOuvrage {
         Ouvrage a = la.get(choix-1);
          do {
             try {
-                String nom = modifyIfNotBlank("nom", a.getNom());
-                String prenom = modifyIfNotBlank("prénom", a.getPrenom());
-                String nat = modifyIfNotBlank("nationalité", a.getNationalite());
-                a.setNom(nom);
-                a.setPrenom(prenom);
-                a.setNationalite(nat);
+                double ploc =Double.parseDouble(modifyIfNotBlank("prix location",""+a.getPrixLocation()));
+                a.setPrixLocation(ploc);
                 break;
             } catch (Exception e) {
                 System.out.println("erreur :" + e);
             }
         }while(true);
-        OuvrageController.update(a);
+        controller.update(a);
    }
 
 
     public void ajouter() {
-        Ouvrage a;
-        do {
-            try {
-                System.out.println("nom ");
-                String nom = sc.nextLine();
-                System.out.println("prénom ");
-                String prenom = sc.nextLine();
-                System.out.println("nationalité");
-                String nat = sc.nextLine();
-                a = new Ouvrage(nom, prenom, nat);
-                break;
-            } catch (Exception e) {
-                System.out.println("une erreur est survenue : "+e.getMessage());
-            }
-        }while(true);
-        OuvrageController.add(a);
+        TypeOuvrage[] tto = TypeOuvrage.values();
+        List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
+        int choix = Utilitaire.choixListe(lto);
+        Ouvrage a = null;
+        List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
+        a = lof.get(choix-1).create();
+        //TODO affecter un ou plusieurs auteurs
+        //TODO trier les auteurs présentés par ordre de nom et prénom  ==>  classe anonyme
+        //TODO ne pas présenter les auteurs déjà enregistrés pour cet ouvrage
+        controller.add(a);
     }
 
-    public void special(Ouvrage a) {
+    protected void special() {
+        int choix =  choixElt(la);
+        Ouvrage o = la.get(choix-1);
 
-        List options = Arrays.asList("lister ouvrages", "lister livres", "lister par genre","fin");
+        List options = new ArrayList<>(Arrays.asList("lister exemplaires", "lister exemplaires en location", "lister exemplaires libres","fin"));
         do {
             int ch = choixListe(options);
 
             switch (ch) {
 
                 case 1:
-                    listerOuvrages(a);
+                    exemplaires(o);
                     break;
                 case 2:
-                    listerLivres(a);
+                    enLocation(o, true);
                     break;
                 case 3:
-                    listerGenre(a);
+                    enLocation(o, false);
                     break;
-                  case 4 :return;
+
+                case 4 :return;
             }
         } while (true);
 
     }
 
-
-    public void listerGenre(Ouvrage a) {
-        System.out.println("genre :");
-        String genre = sc.nextLine();
-        affListe(new ArrayList(OuvrageController.listerOuvrages(a,genre)));
+    public void enLocation(Ouvrage o, boolean enLocation) {
+        List<Exemplaire> l= ((ControllerSpecialOuvrage) controller).listerExemplaire(o, enLocation);
+        affList(l);
     }
 
-
-    public void listerOuvrages(Ouvrage a){
-        affList(new ArrayList(OuvrageController.listerOuvrages(a)));
+    public void exemplaires(Ouvrage o) {
+        List<Exemplaire> l= ((ControllerSpecialOuvrage)controller).listerExemplaire(o);
+        affList(l);
     }
-
-
-    public void listerLivres(Ouvrage a){
-        TypeLivre[] tlv = TypeLivre.values();
-        int ch2 = choixListe(List.of(tlv));
-        TypeLivre tl = tlv[ch2-1];
-        affList(new ArrayList(OuvrageController.listerLivre(a,tl)));
-    }
-
     @Override
     public void affList(List la) {
         affListe(la);

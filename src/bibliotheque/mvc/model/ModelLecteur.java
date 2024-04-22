@@ -1,21 +1,16 @@
 package bibliotheque.mvc.model;
 
-import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.Livre;
-import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.TypeLivre;
+import bibliotheque.metier.Lecteur;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class OuvrageModel extends DAOOuvrage {
-
-    private List<Ouvrage> ldatas = new ArrayList<>();
+public class ModelLecteur extends DAO<Lecteur> {
+    private List<Lecteur> ldatas = new ArrayList<>();
 
 
     @Override
-    public Ouvrage add( Ouvrage elt) {
+    public Lecteur add( Lecteur elt) {
         boolean present =ldatas.contains(elt);
         if (!present) {
             ldatas.add(elt);
@@ -25,14 +20,14 @@ public class OuvrageModel extends DAOOuvrage {
     }
 
     @Override
-    public boolean remove( Ouvrage elt) {
+    public boolean remove( Lecteur elt) {
         boolean ok = ldatas.remove(elt);
         notifyObservers();
         return ok;
     }
 
     @Override
-    public Ouvrage update(Ouvrage elt) {
+    public Lecteur update(Lecteur elt) {
         int p = ldatas.indexOf(elt);
         if (p < 0) return null;
         ldatas.set(p, elt);
@@ -41,16 +36,15 @@ public class OuvrageModel extends DAOOuvrage {
     }
 
     @Override
-    public Ouvrage read(Ouvrage rech) {
+    public Lecteur read(Lecteur rech) {
         int p = ldatas.indexOf(rech);
         if(p<0) return null;
         return ldatas.get(p);
     }
 
     @Override
-    public List<Ouvrage> getAll() {
+    public List<Lecteur> getAll() {
         return ldatas;
     }
-
 
 }
