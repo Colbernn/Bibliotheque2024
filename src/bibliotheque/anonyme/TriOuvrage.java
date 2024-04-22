@@ -10,11 +10,11 @@ public class TriOuvrage {
 public static void main(String args[]){
 
          //tri sur l'age
-         Collections.sort(lemp, new Comparator<Ouvrage>(){ //au lieu de new AgeComparator
+         Collections.sort(laut, new Comparator<Ouvrage>(){ //au lieu de new AgeComparator
 
 
         //tri sur le nom
-         Collections.sort(, new Comparator<Ouvrage>()
+         Collections.sort(, new Comparator<Ouvrage>());
 
 
          public int compare(Ouvrage ouv1,Ouvrage ouv2){
@@ -25,8 +25,8 @@ public static void main(String args[]){
  }
                  );
 
-         System.out.println("\n\nOrdre des employes apres tri sur le nom");
-                 System.out.println(lemp);
+         System.out.println("\n\nOrdre des ouvrages apres tri sur le titres");
+                 System.out.println(laut);
 
     }
 }

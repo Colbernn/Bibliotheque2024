@@ -1,5 +1,6 @@
 package bibliotheque.anonyme;
 
+import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Ouvrage;
 
 import java.util.Collections;
@@ -9,23 +10,23 @@ public class TriAuteur {
 public static void main(String args[]){
 
          //tri sur l'age
-         Collections.sort(lemp, new Comparator<Ouvrage>(){ //au lieu de new AgeComparator
+         Collections.sort(laut, new Comparator<Auteur>(){ //au lieu de new AgeComparator
 
 
         //tri sur le nom
-         Collections.sort(, new Comparator<Ouvrage>()
+         Collections.sort(laut, new Comparator<Auteur>());
 
 
-         public int compare(Ouvrage ouv1,Ouvrage ouv2){
-                        String ouv1Titre = ouv1.getTitre();
-                        String ouv2Titre = ouv2.getTitre();
-                         return ouv1Titre.compareTo(ouv2Titre);
+         public int compare(Auteur aut1,Auteur aut2){
+                        String aut1Nom = aut1.getNom();
+                        String aut2Nom = aut2.getNom();
+                         return aut1Nom.compareTo(aut2Nom);
                          }
  }
                  );
 
-         System.out.println("\n\nOrdre des employes apres tri sur le nom");
-                 System.out.println(lemp);
+         System.out.println("\n\nOrdre des auteurs apres tri sur le nom");
+                 System.out.println(laut);
 
     }
 }
