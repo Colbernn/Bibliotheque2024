@@ -22,6 +22,10 @@ public class OuvrageController extends Controller<Ouvrage> implements Controller
     public List<Exemplaire> listerExemplaire(Ouvrage o, boolean enLocation){
         return((DAOSpecialOuvrage)model).listerExemplaire(o,enLocation);
     }
+    @Override
+    public List<Ouvrage> search(int rech) {
+        return  model.read(rech);
+    }
 
     @Override
     public double amendeRetard(Ouvrage o,int nj) {

@@ -104,6 +104,7 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 List<Ouvrage> lo = GestionMVC.ov.getAll();
                 //TODO présenter les ouvrages par ordre de titre ==> classe anonyme
 
+
                 int ch = choixListe(lo);
                 a = new Exemplaire(mat, descr,lo.get(ch-1));
                 System.out.println("rayon");
@@ -157,6 +158,10 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
 
     private void louer(Exemplaire a) {
         //TODO chosir un lecteur et enregistrer la location dans LOCATIONS
+        System.out.println("Choisissez un lecteur : ");
+        int choix = choixListe(lec);
+        locations.put(lec(choix));
+
     }
 
 

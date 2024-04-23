@@ -4,6 +4,7 @@ import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeOuvrage;
 import bibliotheque.mvc.controller.ControllerSpecialOuvrage;
+import bibliotheque.mvc.controller.OuvrageController;
 import bibliotheque.utilitaires.*;
 
 import java.util.ArrayList;
@@ -59,6 +60,9 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
 
     public void rechercher() {
         //TODO rechercher ouvrage en demandant type d'ouvrage, puis l'info unique relative à au type recherché
+        System.out.println("idOuvrage : ");
+        int idOuvrage = sc.nextInt();
+        OuvrageController.search(idOuvrage);
     }
 
 
